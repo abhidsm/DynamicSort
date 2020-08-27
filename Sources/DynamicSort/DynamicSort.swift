@@ -9,7 +9,7 @@ struct DynamicSort {
 }
 
 extension QueryBuilder {
-    public func genericSort(_ req: Request, field: String? = nil, dir: String? = nil) -> Self {
+    public func dynamicSort(_ req: Request, field: String? = nil, dir: String? = nil) -> Self {
         var fields: [String] = []
         var sortField: String? = nil
         if field != nil {
@@ -23,7 +23,7 @@ extension QueryBuilder {
             sortField = sortOn
         }
         
-        let direction = sortDir(req, dir: dir)
+        let direction = sortDirection(req, dir: dir)
         if fields.count > 0 {
             var query = self
             for field in fields {
@@ -37,7 +37,7 @@ extension QueryBuilder {
         }
     }
     
-    public func sortDir(_ req: Request, dir: String? = nil) -> DatabaseQuery.Sort.Direction {
+    public func sortDirection(_ req: Request, dir: String? = nil) -> DatabaseQuery.Sort.Direction {
         var direction = DatabaseQuery.Sort.Direction.custom("invalid")
         var sortDirection: String? = nil
         if dir == nil {
